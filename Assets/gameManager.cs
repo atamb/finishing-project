@@ -6,15 +6,16 @@ using UnityEngine.SceneManagement;
 public class gameManager : MonoBehaviour
 {
     public bool[] park; // Park dizisi
+    public Canvas canvas;
     public GameObject objePrefab; // Oluşturulacak obje prefabı
     public GameObject busses; // Otobüslerin instantiate edileceği ana obje
-    private GameObject[] instantiatedBusses; // Oluşturulmuş otobüsleri tutmak için dizi
+    public GameObject busses2; // Otobüslerin instantiate edileceği ana obje
+    private GameObject[] instantiatedBusses;
 
     void Start()
     {
-        // Park dizisini 3 elemanlı olarak başlat
-        park = new bool[3];
-        instantiatedBusses = new GameObject[3]; // Oluşturulmuş otobüsleri tutmak için dizi
+        park = new bool[6];
+        instantiatedBusses = new GameObject[6];
     }
 
     void Update()
@@ -36,13 +37,22 @@ public class gameManager : MonoBehaviour
         {
             ToggleParkStatus(2, "kadisarj3", "kadicikis3");
         }
+        // 2 tuşuna basıldığında park[3]'i toggle yap
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            SceneManager.LoadScene(1);
+            ToggleParkStatus2(3, "sabisarj1", "sabicikis1");
         }
+
+        // 2 tuşuna basıldığında park[4]'i toggle yap
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            SceneManager.LoadScene(0);
+            ToggleParkStatus2(4, "sabisarj2", "sabicikis2");
+        }
+
+        // 3 tuşuna basıldığında park[5]'yi toggle yap
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            ToggleParkStatus2(5, "sabisarj3", "sabicikis3");
         }
     }
 
@@ -62,9 +72,24 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    void ToggleParkStatus2(int index, string animName, string reverseAnimName)
+    {
+        if (park[index])
+        {
+            park[index] = false;
+            Debug.Log("Park " + (index + 1) + "den çıkıldı.");
+            CreateObjectAndPlayAnimation2(reverseAnimName, index);
+        }
+        else
+        {
+            park[index] = true;
+            Debug.Log("Park " + (index + 1) + " seçildi.");
+            CreateObjectAndPlayAnimation2(animName, index);
+        }
+    }
+
     void CreateObjectAndPlayAnimation(string animationName, int index)
     {
-        // Eğer zaten bir otobüs instantiate edilmişse, yok et
         if (instantiatedBusses[index] != null)
         {
             Destroy(instantiatedBusses[index]);
@@ -91,10 +116,39 @@ public class gameManager : MonoBehaviour
         {
             Debug.LogWarning("Animator bileşeni veya belirtilen animasyon bulunamadı.");
         }
-
-        // Oluşturulan objeyi diziye kaydet
         instantiatedBusses[index] = obje;
+
     }
-    
+    void CreateObjectAndPlayAnimation2(string animationName, int index)
+    {
+        if (instantiatedBusses[index] != null)
+        {
+            Destroy(instantiatedBusses[index]);
+        }
+
+        // Otobüslerin instantiate edileceği konumu belirle
+        Vector3 position = busses2.transform.position;
+
+        // Objeyi oluştur
+        GameObject obje = Instantiate(objePrefab, position, Quaternion.identity);
+
+        // Oluşturulan objenin ebeveynini "busses" objesi olarak ayarla
+        obje.transform.parent = busses2.transform;
+
+        // Oluşturulan objenin içerdiği Animator bileşenini al
+        Animator animator = obje.GetComponent<Animator>();
+
+        // Eğer Animator bileşeni varsa ve belirtilen animasyon mevcutsa, oynat
+        if (animator != null && animator.HasState(0, Animator.StringToHash(animationName)))
+        {
+            animator.Play(animationName);
+        }
+        else
+        {
+            Debug.LogWarning("Animator bileşeni veya belirtilen animasyon bulunamadı.");
+        }
+        instantiatedBusses[index] = obje;
+
+    }
 
     }

@@ -5,25 +5,8 @@ using TMPro;
 
 public class clockScript : MonoBehaviour
 {
-    public static clockScript instance; // Clock nesnesine her yerden erişmek için bir örnek oluşturuyoruz
     public TextMeshProUGUI clockText; // Saati ekrana yazdırmak için TMP metin nesnesi
     private float timeMultiplier = 100f; // Yazdırma hızını ayarlamak için çarpan
-
-    void Awake()
-    {
-        // Eğer Clock nesnesi daha önce oluşturulmadıysa
-        if (instance == null)
-        {
-            // Bu Clock nesnesini instance olarak ayarla ve yok etme
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            // Eğer zaten başka bir Clock nesnesi varsa, bu nesneyi yok et
-            Destroy(gameObject);
-        }
-    }
 
     void Update()
     {
