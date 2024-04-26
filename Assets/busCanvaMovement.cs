@@ -44,6 +44,8 @@ public class busCanvaMovement : MonoBehaviour
             // imageComponent'ı devre dışı bırak
             if(!isMovingRight)
                 gm.kadigiris=true;
+            if(isMovingRight)
+                gm.sabigiris=true;
             imageComponent.enabled = false;
             Invoke("RespawnObject",10f);
             rectTransform.anchoredPosition = respawnPositionMid;
@@ -70,6 +72,9 @@ public class busCanvaMovement : MonoBehaviour
         }
         // imageComponent'ı tekrar etkinleştir
         imageComponent.enabled = true;
-        gm.kadicikis = true;
+        if(!isMovingRight)
+                gm.sabicikis=true;
+        if(isMovingRight)
+                gm.kadicikis=true;
     }
 }

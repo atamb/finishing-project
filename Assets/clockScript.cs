@@ -6,7 +6,7 @@ using TMPro;
 public class clockScript : MonoBehaviour
 {
     public TextMeshProUGUI clockText; // Saati ekrana yazdırmak için TMP metin nesnesi
-    private float timeMultiplier = 100f; // Yazdırma hızını ayarlamak için çarpan
+    private float timeMultiplier = 30f; // Yazdırma hızını ayarlamak için çarpan
 
     void Update()
     {

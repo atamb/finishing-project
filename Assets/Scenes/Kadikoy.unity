@@ -3465,7 +3465,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -39.4, y: 121.7}
+  m_AnchoredPosition: {x: 261.4, y: 121.7}
   m_SizeDelta: {x: 68.8, y: 42.22}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &613646421
@@ -7997,6 +7997,7 @@ MonoBehaviour:
   busses: {fileID: 1606591859}
   busses2: {fileID: 879781144}
   sabigiris: 0
+  sabicikis: 0
   kadigiris: 0
   kadicikis: 0
 --- !u!4 &1359351178
@@ -11564,7 +11565,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1951208702
 AudioListener:
   m_ObjectHideFlags: 0

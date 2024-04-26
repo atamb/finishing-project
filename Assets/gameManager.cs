@@ -13,6 +13,7 @@ public class gameManager : MonoBehaviour
     public GameObject busses2; // Otobüslerin instantiate edileceği ana obje
     private GameObject[] instantiatedBusses;
     public bool sabigiris;
+    public bool sabicikis;
     public bool kadigiris;
     public bool kadicikis;
     private string isim1="kadisarj";
@@ -59,39 +60,33 @@ public class gameManager : MonoBehaviour
                 }
             }
         }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if(sabigiris)
         {
-            ToggleParkStatus(0, "kadisarj1", "kadicikis1");
+            sabigiris = false;
+            for(int i=0;i<3;i++)
+            {
+                if(!park[i])
+                {
+                    string parkAdi = isim3 + (i + 1).ToString();
+                    string parkAdi2 = isim4 + (i + 1).ToString();
+                    ToggleParkStatus2(i+3, parkAdi, parkAdi2);
+                    break;
+                }
+            }
         }
-
-        // 2 tuşuna basıldığında park[1]'i toggle yap
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if(sabicikis)
         {
-            ToggleParkStatus(1, "kadisarj2", "kadicikis2");
-        }
-
-        // 3 tuşuna basıldığında park[2]'yi toggle yap
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ToggleParkStatus(2, "kadisarj3", "kadicikis3");
-        }
-        // 2 tuşuna basıldığında park[3]'i toggle yap
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ToggleParkStatus2(3, "sabisarj1", "sabicikis1");
-        }
-
-        // 2 tuşuna basıldığında park[4]'i toggle yap
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            ToggleParkStatus2(4, "sabisarj2", "sabicikis2");
-        }
-
-        // 3 tuşuna basıldığında park[5]'yi toggle yap
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ToggleParkStatus2(5, "sabisarj3", "sabicikis3");
+            sabicikis = false;
+            for(int i=0;i<3;i++)
+            {
+                if(park[i])
+                {
+                    string parkAdi = isim3 + (i + 1).ToString();
+                    string parkAdi2 = isim4 + (i + 1).ToString();
+                    ToggleParkStatus2(i+3, parkAdi, parkAdi2);
+                    break;
+                }
+            }
         }
     }
 
@@ -120,12 +115,14 @@ public class gameManager : MonoBehaviour
             park[index] = false;
             Debug.Log("Park " + (index + 1) + "den çıkıldı.");
             CreateObjectAndPlayAnimation2(reverseAnimName, index);
+            busPark[index].SetActive(false); 
         }
         else
         {
             park[index] = true;
             Debug.Log("Park " + (index + 1) + " seçildi.");
             CreateObjectAndPlayAnimation2(animName, index);
+            busPark[index].SetActive(true);
         }
     }
 
