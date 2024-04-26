@@ -10,9 +10,11 @@ public class busCanvaMovement : MonoBehaviour
     public float rightBoundary = 270f; // Sağ sınır
     public Vector3 respawnPositionLeft = new Vector3(-238f, 121f, 0f); // Sol spawn konumu
     public Vector3 respawnPositionRight = new Vector3(238f, 180f, 0f); // Sağ spawn konumu
+    public Vector3 respawnPositionMid = new Vector3(120f, 180f, 0f); // Sağ spawn konumu
     public bool isMovingRight = false; // Sağa mı gidiyor?
     public RectTransform rectTransform;
     public float movement;
+    gameManager gm;
 
     private Image imageComponent; // SpriteRenderer bileşeni
 
@@ -22,6 +24,7 @@ public class busCanvaMovement : MonoBehaviour
         imageComponent = GetComponent<Image>();
         if (rectTransform == null)
             rectTransform = GetComponent<RectTransform>();
+        gm=GameObject.Find("gameManager").GetComponent<gameManager>();
     }
 
     void Update()
@@ -39,9 +42,12 @@ public class busCanvaMovement : MonoBehaviour
             (!isMovingRight && rectTransform.anchoredPosition.x <= -270f))
         {
             // imageComponent'ı devre dışı bırak
+            if(!isMovingRight)
+                gm.kadigiris=true;
             imageComponent.enabled = false;
+            Invoke("RespawnObject",10f);
+            rectTransform.anchoredPosition = respawnPositionMid;
             // 10 saniye sonra tekrar spawn
-            RespawnObject();
         }
     }
 
@@ -54,6 +60,7 @@ public class busCanvaMovement : MonoBehaviour
             // Yeni spawn konumu ve yön
             rectTransform.anchoredPosition = respawnPositionRight;
             isMovingRight = !isMovingRight;
+            
         }
         else
         {
@@ -63,5 +70,6 @@ public class busCanvaMovement : MonoBehaviour
         }
         // imageComponent'ı tekrar etkinleştir
         imageComponent.enabled = true;
+        gm.kadicikis = true;
     }
 }

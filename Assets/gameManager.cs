@@ -6,21 +6,60 @@ using UnityEngine.SceneManagement;
 public class gameManager : MonoBehaviour
 {
     public bool[] park; // Park dizisi
+    public GameObject[] busPark;
     public Canvas canvas;
     public GameObject objePrefab; // Oluşturulacak obje prefabı
     public GameObject busses; // Otobüslerin instantiate edileceği ana obje
     public GameObject busses2; // Otobüslerin instantiate edileceği ana obje
     private GameObject[] instantiatedBusses;
+    public bool sabigiris;
+    public bool kadigiris;
+    public bool kadicikis;
+    private string isim1="kadisarj";
+    private string isim2="kadicikis";
+    private string isim3="sabisarj";
+    private string isim4="sabicikis";
 
     void Start()
     {
         park = new bool[6];
         instantiatedBusses = new GameObject[6];
+        sabigiris = false;
+        kadigiris = false;
+        kadicikis = false;
     }
 
     void Update()
     {
-        // 1 tuşuna basıldığında park[0]'ı toggle yap
+        if(kadigiris)
+        {
+            kadigiris = false;
+            for(int i=0;i<3;i++)
+            {
+                if(!park[i])
+                {
+                    string parkAdi = isim1 + (i + 1).ToString();
+                    string parkAdi2 = isim2 + (i + 1).ToString();
+                    ToggleParkStatus(i, parkAdi, parkAdi2);
+                    break;
+                }
+            }
+        }    
+        if(kadicikis)
+        {
+            kadicikis = false;
+            for(int i=0;i<3;i++)
+            {
+                if(park[i])
+                {
+                    string parkAdi = isim1 + (i + 1).ToString();
+                    string parkAdi2 = isim2 + (i + 1).ToString();
+                    ToggleParkStatus(i, parkAdi, parkAdi2);
+                    break;
+                }
+            }
+        }
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ToggleParkStatus(0, "kadisarj1", "kadicikis1");
@@ -63,12 +102,14 @@ public class gameManager : MonoBehaviour
             park[index] = false;
             Debug.Log("Park " + (index + 1) + "den çıkıldı.");
             CreateObjectAndPlayAnimation(reverseAnimName, index);
+            busPark[index].SetActive(false);           
         }
         else
         {
             park[index] = true;
             Debug.Log("Park " + (index + 1) + " seçildi.");
             CreateObjectAndPlayAnimation(animName, index);
+            busPark[index].SetActive(true);
         }
     }
 
@@ -151,4 +192,4 @@ public class gameManager : MonoBehaviour
 
     }
 
-    }
+}
