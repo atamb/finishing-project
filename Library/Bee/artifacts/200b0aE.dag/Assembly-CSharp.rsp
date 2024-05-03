@@ -346,11 +346,13 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/bus.cs"
-"Assets/busCanvaMovement.cs"
-"Assets/busOnTheTop.cs"
-"Assets/clockScript.cs"
-"Assets/gameManager.cs"
+"Assets/scripts/bus.cs"
+"Assets/scripts/busCanvaMovement.cs"
+"Assets/scripts/busOnTheTop.cs"
+"Assets/scripts/busSpawner.cs"
+"Assets/scripts/buttonCode.cs"
+"Assets/scripts/clockScript.cs"
+"Assets/scripts/gameManager.cs"
 -langversion:9.0
 
 /deterministic
