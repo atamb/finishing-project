@@ -32,6 +32,10 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
+        AnimPlayer();
+    }
+    void AnimPlayer()
+    {
         if(kadigiris)
         {
             kadigiris = false;
