@@ -22,6 +22,7 @@ public class clockScript : MonoBehaviour
     public int[] busCharges = new int[8];
     private float timer = 0f;
     public TMP_Text[] chargeTexts;
+    public static int[] carNumbers = new int[11];
 
     void Start()
     {
@@ -32,6 +33,10 @@ public class clockScript : MonoBehaviour
         {
             busCharges[i] = 100;
             goingBool[i] = false;
+        }
+        for (int i = 0; i < carNumbers.Length; i++)
+        {
+            carNumbers[i] = PlayerPrefs.GetInt("CarNumber_" + i);
         }
     }
 
@@ -47,7 +52,7 @@ public class clockScript : MonoBehaviour
         timer += Time.deltaTime;
 
         // Belirli bir süre geçtikten sonra busCharges[1]'i azalt
-        if (timer >= 1f)
+        if (timer >= 4f)
         {
             if (goingBool[0])
             {
@@ -111,7 +116,7 @@ public class clockScript : MonoBehaviour
 
         if (hour == 7 && minute == 45 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[0], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[0]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[0].color = yellowColor;
@@ -125,7 +130,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 9 && minute == 15 && checkBool == true)
         {
-            GameObject canvasInstance = Instantiate(busses[1], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[1]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionLeft;
             rawImages[1].color = yellowColor;
@@ -139,7 +144,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 10 && minute == 45 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[2], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[2]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[2].color = yellowColor;
@@ -153,7 +158,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 12 && minute == 15 && checkBool == true)
         {
-            GameObject canvasInstance = Instantiate(busses[3], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[3]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionLeft;
             rawImages[3].color = yellowColor;
@@ -167,7 +172,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 13 && minute == 45 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[4], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[4]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[4].color = yellowColor;
@@ -181,7 +186,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 15 && minute == 15 && checkBool == true)
         {
-            GameObject canvasInstance = Instantiate(busses[5], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[5]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionLeft;
             rawImages[5].color = yellowColor;
@@ -195,7 +200,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 16 && minute == 45 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[6], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[6]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[6].color = yellowColor;
@@ -209,7 +214,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 18 && minute == 15 && checkBool == true)
         {
-            GameObject canvasInstance = Instantiate(busses[7], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[7]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionLeft;
             rawImages[7].color = yellowColor;
@@ -223,7 +228,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 19 && minute == 45 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[3], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[8]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[8].color = yellowColor;
@@ -237,7 +242,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 21 && minute == 10 && checkBool == true)
         {
-            GameObject canvasInstance = Instantiate(busses[1], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[9]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionLeft;
             rawImages[9].color = yellowColor;
@@ -246,7 +251,7 @@ public class clockScript : MonoBehaviour
         }
         if (hour == 22 && minute == 30 && checkBool == false)
         {
-            GameObject canvasInstance = Instantiate(busses[0], parentObject.transform);
+            GameObject canvasInstance = Instantiate(busses[carNumbers[10]-1], parentObject.transform);
             spawnRectTransform = canvasInstance.GetComponent<RectTransform>();
             spawnRectTransform.anchoredPosition = respawnPositionRight;
             rawImages[10].color = yellowColor;

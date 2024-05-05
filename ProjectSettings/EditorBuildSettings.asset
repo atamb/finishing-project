@@ -6,9 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Kadikoy.unity
-    guid: bf0f25b67091e41b8907512ad9d2cb37
-  - enabled: 1
-    path: Assets/Scenes/S.Gokcen.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 118e2e09857cd44fc91a8f7a41145b8c
+  - enabled: 1
+    path: Assets/Scenes/SelectingScene.unity
+    guid: 83e417d11bf4c4767829eb1097bde108
+  - enabled: 1
+    path: Assets/Scenes/GameScene.unity
+    guid: bf0f25b67091e41b8907512ad9d2cb37
   m_configObjects: {}
