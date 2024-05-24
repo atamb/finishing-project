@@ -10,7 +10,6 @@ public class ChargingManager : MonoBehaviour
     {
         int[] a = new int[totalInputs]; // Otobüs numaralarını ve dakika sürelerini tutacak dizi
         LoadChargingSchedule(a);
-        PrintArray(a);
     }
 
     void LoadChargingSchedule(int[] array)
@@ -22,13 +21,6 @@ public class ChargingManager : MonoBehaviour
 
             array[2 * i] = busNumber;
             array[2 * i + 1] = minute;
-        }
-    }
-    void PrintArray(int[] array)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            Debug.Log("a[" + i + "] = " + array[i]);
         }
     }
 }

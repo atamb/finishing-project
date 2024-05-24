@@ -15,7 +15,7 @@ public class busCanvaMovement : MonoBehaviour
     public bool isMovingRight = false; // Sağa mı gidiyor?
     public RectTransform rectTransform;
     public float movement;
-    gameManager gm;
+    private clockScript clockScript;
 
     public Image imageComponent; // SpriteRenderer bileşeni
 
@@ -23,7 +23,6 @@ public class busCanvaMovement : MonoBehaviour
     {
         imageComponent = GetComponent<Image>();
         rectTransform = GetComponent<RectTransform>();
-        gm=GameObject.Find("gameManager").GetComponent<gameManager>();
         if (rectTransform.anchoredPosition.y >= 150f)
         {
             isMovingRight = false;
@@ -54,30 +53,25 @@ public class busCanvaMovement : MonoBehaviour
             }
         }
         }
+        GameObject clockObject = GameObject.Find("Clock");
+        if (clockObject != null) {
+            clockScript = clockObject.GetComponent<clockScript>();
+        }
         leftBoundary = -265f;
         rightBoundary = 265f;
-        speed = 3.3f;
     }
 
     void Update()
     {
-        // Eğer SpriteRenderer null ise (bileşen yoksa) update'i geç
+        speed = clockScript.speedCanva;
         if (imageComponent == null)
             return;
 
         movement = isMovingRight ? speed : -speed;
         rectTransform.anchoredPosition += new Vector2(movement * Time.deltaTime, 0f);
-
-
-        // Obje sol sınırı geçtiğinde veya sağ sınırı geçtiğinde
         if ((isMovingRight && rectTransform.anchoredPosition.x >= 270f) ||
             (!isMovingRight && rectTransform.anchoredPosition.x <= -270f))
         {
-            // imageComponent'ı devre dışı bırak
-            if(!isMovingRight)
-                gm.kadigiris=true;
-            if(isMovingRight)
-                gm.sabigiris=true;
             Destroy(gameObject);
             // 10 saniye sonra tekrar spawn
         }

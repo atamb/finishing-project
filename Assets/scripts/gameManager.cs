@@ -5,10 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class gameManager : MonoBehaviour
 {
-    public bool[] park; // Park dizisi
-    public GameObject[] busPark;
-    public Canvas canvas;
-    public GameObject objePrefab; // Oluşturulacak obje prefabı
+    /*public GameObject objePrefab; // Oluşturulacak obje prefabı
     public GameObject busses; // Otobüslerin instantiate edileceği ana obje
     public GameObject busses2; // Otobüslerin instantiate edileceği ana obje
     private GameObject[] instantiatedBusses;
@@ -23,7 +20,6 @@ public class gameManager : MonoBehaviour
 
     void Start()
     {
-        park = new bool[6];
         instantiatedBusses = new GameObject[6];
         sabigiris = false;
         kadigiris = false;
@@ -39,94 +35,34 @@ public class gameManager : MonoBehaviour
         if(kadigiris)
         {
             kadigiris = false;
-            for(int i=0;i<3;i++)
-            {
-                if(!park[i])
-                {
-                    string parkAdi = isim1 + (i + 1).ToString();
-                    string parkAdi2 = isim2 + (i + 1).ToString();
-                    ToggleParkStatus(i, parkAdi, parkAdi2);
-                    break;
-                }
-            }
+            string parkAdi = isim1 + (i + 1).ToString();
+            string parkAdi2 = isim2 + (i + 1).ToString();
+            ToggleParkStatus(i, parkAdi, parkAdi2);
+            break;
         }    
         if(kadicikis)
         {
             kadicikis = false;
-            for(int i=0;i<3;i++)
-            {
-                if(park[i])
-                {
-                    string parkAdi = isim1 + (i + 1).ToString();
-                    string parkAdi2 = isim2 + (i + 1).ToString();
-                    ToggleParkStatus(i, parkAdi, parkAdi2);
-                    break;
-                }
-            }
+            string parkAdi = isim1 + (i + 1).ToString();
+            string parkAdi2 = isim2 + (i + 1).ToString();
+            ToggleParkStatus(i, parkAdi, parkAdi2);
+            break;
         }
         if(sabigiris)
         {
             sabigiris = false;
-            for(int i=0;i<3;i++)
-            {
-                if(!park[i])
-                {
-                    string parkAdi = isim3 + (i + 1).ToString();
-                    string parkAdi2 = isim4 + (i + 1).ToString();
-                    ToggleParkStatus2(i+3, parkAdi, parkAdi2);
-                    break;
-                }
-            }
+            string parkAdi = isim3 + (i + 1).ToString();
+            string parkAdi2 = isim4 + (i + 1).ToString();
+            ToggleParkStatus2(i+3, parkAdi, parkAdi2);
+            break;
         }
         if(sabicikis)
         {
             sabicikis = false;
-            for(int i=0;i<3;i++)
-            {
-                if(park[i])
-                {
-                    string parkAdi = isim3 + (i + 1).ToString();
-                    string parkAdi2 = isim4 + (i + 1).ToString();
-                    ToggleParkStatus2(i+3, parkAdi, parkAdi2);
-                    break;
-                }
-            }
-        }
-    }
-
-    void ToggleParkStatus(int index, string animName, string reverseAnimName)
-    {
-        if (park[index])
-        {
-            park[index] = false;
-            Debug.Log("Park " + (index + 1) + "den çıkıldı.");
-            CreateObjectAndPlayAnimation(reverseAnimName, index);
-            busPark[index].SetActive(false);           
-        }
-        else
-        {
-            park[index] = true;
-            Debug.Log("Park " + (index + 1) + " seçildi.");
-            CreateObjectAndPlayAnimation(animName, index);
-            busPark[index].SetActive(true);
-        }
-    }
-
-    void ToggleParkStatus2(int index, string animName, string reverseAnimName)
-    {
-        if (park[index])
-        {
-            park[index] = false;
-            Debug.Log("Park " + (index + 1) + "den çıkıldı.");
-            CreateObjectAndPlayAnimation2(reverseAnimName, index);
-            busPark[index].SetActive(false); 
-        }
-        else
-        {
-            park[index] = true;
-            Debug.Log("Park " + (index + 1) + " seçildi.");
-            CreateObjectAndPlayAnimation2(animName, index);
-            busPark[index].SetActive(true);
+            string parkAdi = isim3 + (i + 1).ToString();
+            string parkAdi2 = isim4 + (i + 1).ToString();
+            ToggleParkStatus2(i+3, parkAdi, parkAdi2);
+            break;
         }
     }
 
@@ -191,6 +127,6 @@ public class gameManager : MonoBehaviour
         }
         instantiatedBusses[index] = obje;
 
-    }
+    }*/
 
 }

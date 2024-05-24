@@ -21,4 +21,8 @@ public class buttonCode2 : MonoBehaviour
     {
         SceneManager.LoadScene(2);
     }
+    public void MainMenu1()
+    {
+        SceneManager.LoadScene(0);
+    }
 }
