@@ -308,8 +308,6 @@
 -r:"Library/Bee/artifacts/200b0aP.dag/Unity.VisualScripting.Flow.ref.dll"
 -r:"Library/Bee/artifacts/200b0aP.dag/Unity.VisualScripting.State.ref.dll"
 -r:"Library/Bee/artifacts/200b0aP.dag/UnityEngine.UI.ref.dll"
-"Assets/gameManager2.cs"
-"Assets/InputManager.cs"
 "Assets/scripts/bus.cs"
 "Assets/scripts/busCanvaMovement.cs"
 "Assets/scripts/busOnTheTop.cs"
@@ -319,6 +317,8 @@
 "Assets/scripts/ChargingManager.cs"
 "Assets/scripts/clockScript.cs"
 "Assets/scripts/gameManager.cs"
+"Assets/scripts/gameManager2.cs"
+"Assets/scripts/InputManager.cs"
 -langversion:9.0
 
 /deterministic
