@@ -49,7 +49,7 @@ public class clockScript : MonoBehaviour
     public GameObject busses2; // Otobüslerin instantiate edileceği ana obje
     public GameObject objePrefab;
     public GameObject[] instantiatedBusses;
-    private float totalCharge = 0;
+    public float totalCharge = 0;
     public int speedMultiplier = 1; 
     private float lastSpeedChangeTime;
     private float accumulatedGameTime;
@@ -58,10 +58,12 @@ public class clockScript : MonoBehaviour
 
     private float minCarbonValue = float.MaxValue;
     private float minPriceValue = float.MaxValue;
-    private float minAvgBusCharge = float.MaxValue;
-    public bool[] startChargePlayed = new bool[102]; // 24 saat için başlangıç animasyonu kontrolü
-    public bool[] endChargePlayed = new bool[102]; // 24 saat için 3 otobüsün bitiş animasyonu kontrolü
-
+    public float maxAvgBusCharge = float.MinValue;
+    public bool[] startChargePlayed = new bool[105]; // 24 saat için başlangıç animasyonu kontrolü
+    public bool[] endChargePlayed = new bool[105]; // 24 saat için 3 otobüsün bitiş animasyonu kontrolü
+    public bool[] startChargePlayed2 = new bool[60]; // 24 saat için başlangıç animasyonu kontrolü
+    public bool[] endChargePlayed2 = new bool[60]; // 24 saat için 3 otobüsün bitiş animasyonu kontrolü
+    public GameObject GameOver;
     void Start()
     {
         checkBool = false;
@@ -91,6 +93,11 @@ public class clockScript : MonoBehaviour
             startChargePlayed[i] = false;
             endChargePlayed[i] = false;
         }
+        for (int i = 0; i < startChargePlayed2.Length; i++)
+        {
+            startChargePlayed2[i] = false;
+            endChargePlayed2[i] = false;
+        }
         StartTime = Time.realtimeSinceStartup;
         lastSpeedChangeTime = StartTime;
         accumulatedGameTime = 7 * 3600 + 1800;
@@ -101,33 +108,25 @@ public class clockScript : MonoBehaviour
         priceText.text = electricityPrice.ToString();
         carbonText2.text = carbonTotal.ToString();
         priceText2.text = electricityPrice.ToString();
-        for (int i = 0; i < busCharges.Length; i++)
-        {
-            totalCharge += busCharges[i];
-        }
-        for (int i = 0; i < busCharges.Length; i++)
-        {
-            totalCharge += busCharges[i];
-        }
-        totalCharge /= 8;
-        avgBusCharge.text = totalCharge.ToString();
-        
-        minCarbonValue = PlayerPrefs.GetFloat("MinCarbonValue", float.MaxValue);
-        minPriceValue = PlayerPrefs.GetFloat("MinPriceValue", float.MaxValue);
-        minAvgBusCharge = PlayerPrefs.GetFloat("MinAvgBusCharge", float.MaxValue);
-        carbonText3.text = minCarbonValue.ToString();
-        priceText3.text = minPriceValue.ToString();
-        avgBusCharge2.text = minAvgBusCharge.ToString();
         speedX.text = speedMultiplier.ToString();
+        maxAvgBusCharge = PlayerPrefs.GetFloat("maxAvgBusCharge", float.MinValue);
+        if (!PlayerPrefs.HasKey("Firsttt"))
+        {
+            PlayerPrefs.SetInt("Firsttt", 0);
+            PlayerPrefs.SetFloat("maxAvgBusCharge", 0);
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            maxAvgBusCharge = PlayerPrefs.GetFloat("maxAvgBusCharge");
+        }
     }
 
     void Update()
     {
         float currentTime = Time.realtimeSinceStartup;
         float deltaTime = currentTime - lastSpeedChangeTime;
-    // Geçen zamanı hız çarpanı ile birlikte oyun zamanına ekle
         accumulatedGameTime += deltaTime * timeMultiplier * speedMultiplier;
-    // Güncellemeler için lastSpeedChangeTime zamanını güncelle
         lastSpeedChangeTime = currentTime;
         UpdateClock(accumulatedGameTime);
         busChargeFunc();
@@ -183,48 +182,80 @@ public class clockScript : MonoBehaviour
                 busCharges[0] -= 1;
                 timer = 0f;
                 chargeTexts[0].text = busCharges[0].ToString();
+                if(busCharges[0]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[1])
             {
                 busCharges[1] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[1].text = busCharges[1].ToString();
+                if(busCharges[1]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[2])
             {
                 busCharges[2] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[2].text = busCharges[2].ToString();
+                if(busCharges[2]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[3])
             {
                 busCharges[3] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[3].text = busCharges[3].ToString();
+                if(busCharges[3]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[4])
             {
                 busCharges[4] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[4].text = busCharges[4].ToString();
+                if(busCharges[4]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[5])
             {
                 busCharges[5] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[5].text = busCharges[5].ToString();
+                if(busCharges[5]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[6])
             {
                 busCharges[6] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[6].text = busCharges[6].ToString();
+                if(busCharges[6]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
             else if(goingBool[7])
             {
                 busCharges[7] -= 1;
                 timer = 0f; // Zamanlayıcıyı sıfırla
                 chargeTexts[7].text = busCharges[7].ToString();
+                if(busCharges[7]==0)
+                {
+                    GameOver.SetActive(true);
+                }
             }
         }
         }
@@ -274,6 +305,8 @@ public class clockScript : MonoBehaviour
     }
     void BusCharging(int busNum, int whichTimer, int StartCheck)
     {
+        if(StartCheck <= 71)
+        {
         if(!startChargePlayed[StartCheck])
         {
         startChargePlayed[StartCheck] = true;
@@ -323,11 +356,65 @@ public class clockScript : MonoBehaviour
             }
         }
         }
+        }
+        else if(StartCheck >= 72)
+        {
+        if(!startChargePlayed2[StartCheck-72])
+        {
+        startChargePlayed2[StartCheck-72] = true;
+        if(whichTimer == 1)
+        {
+            if(whereisBus[busNum-1]==1)
+                ChargeAnimation(1,0);
+            if(whereisBus[busNum-1]==2)
+                ChargeAnimation(1,2);
+            lightning[busNum-1].SetActive(true);
+        }
+        if(whichTimer == 2)
+        {
+            if(whereisBus[busNum-1]==1)
+                ChargeAnimation(2,0);
+            if(whereisBus[busNum-1]==2)
+                ChargeAnimation(2,2);
+            lightning[busNum-1].SetActive(true);
+            timer3 += Time.deltaTime * speedMultiplier;
+            if(timer3 >= 4f)
+            {
+                if(busCharges[busNum-1] < 100)
+                {
+                    busCharges[busNum-1] += 1;
+                    chargeTexts[busNum-1].text = busCharges[busNum-1].ToString();
+                }
+                timer3 = 0;
+            }
+        }
+
+        if(whichTimer == 3)
+        {
+            if(whereisBus[busNum-1]==1)
+                ChargeAnimation(3,0);
+            if(whereisBus[busNum-1]==2)
+                ChargeAnimation(3,2);
+            lightning[busNum-1].SetActive(true);
+            timer4 += Time.deltaTime * speedMultiplier;
+            if(timer4 >= 4f)
+            {
+                if(busCharges[busNum-1] < 100)
+                {
+                    busCharges[busNum-1] += 1;
+                    chargeTexts[busNum-1].text = busCharges[busNum-1].ToString();
+                }
+                timer4 = 0;
+            }
+        }
+        }
+        }
     }
 
     void ChargeFinished(int busNum, int whichNum, int finishedCheck)
     {
-        if(!endChargePlayed[finishedCheck])
+        if(finishedCheck <= 71){
+            if(!endChargePlayed[finishedCheck])
         {
             endChargePlayed[finishedCheck] = true;
             lightning[busNum-1].SetActive(false);
@@ -335,6 +422,18 @@ public class clockScript : MonoBehaviour
                 ChargeAnimation(whichNum,1);
             if(whereisBus[busNum-1]==2)
                 ChargeAnimation(whichNum,3);
+        }
+        }
+        if(finishedCheck >= 72){
+            if(!endChargePlayed2[finishedCheck-72])
+        {
+            endChargePlayed2[finishedCheck-72] = true;
+            lightning[busNum-1].SetActive(false);
+            if(whereisBus[busNum-1]==1)
+                ChargeAnimation(whichNum,1);
+            if(whereisBus[busNum-1]==2)
+                ChargeAnimation(whichNum,3);
+        }
         }
         
     }
@@ -488,32 +587,32 @@ public class clockScript : MonoBehaviour
                     goingBool[carNumbers[5]-1] = true;
                     checkBool = false;
                 }
-                if((a[42] != carNumbers[3]) && (minute <= a[43]) && (a[42] != 0))
+                if((a[42] != carNumbers[4]) && (minute <= a[43]) && (a[42] != 0))
                     {BusCharging(a[42],1,48);
                 BusCharge2(a[42],1);
                     if(minute == a[43])
                         ChargeFinished(a[42],1,48);}
-                else if((a[42] == carNumbers[3]) && (minute <= a[43] + 5) && (a[42] != 0))
+                else if((a[42] == carNumbers[4]) && (minute <= a[43] + 5) && (a[42] != 0))
                     {BusCharging(a[42],1,48);
                 BusCharge2(a[42],1);
                     if(minute == a[43] + 5)
                         ChargeFinished(a[42],1,48);}
-                if((a[44] != carNumbers[3]) && (minute <= a[45]) && (a[44] != 0))
+                if((a[44] != carNumbers[4]) && (minute <= a[45]) && (a[44] != 0))
                     {BusCharging(a[44],2,49);
                 BusCharge2(a[44],2);
                     if(minute == a[45])
                         ChargeFinished(a[44],2,49);}
-                else if((a[44] == carNumbers[3]) && (minute <= a[45] + 5) && (a[44] != 0))
+                else if((a[44] == carNumbers[4]) && (minute <= a[45] + 5) && (a[44] != 0))
                     {BusCharging(a[44],2,49);
                 BusCharge2(a[44],2);
                     if(minute == a[45] + 5)
                         ChargeFinished(a[44],2,49);}
-                if((a[46] != carNumbers[3]) && (minute <= a[47]) && (a[46] != 0))
+                if((a[46] != carNumbers[4]) && (minute <= a[47]) && (a[46] != 0))
                     {BusCharging(a[46],3,50);
                 BusCharge2(a[46],3);
                     if(minute == a[47])
                         ChargeFinished(a[46],3,50);}
-                else if((a[46] == carNumbers[3]) && (minute <= a[47] + 5) && (a[46] != 0))
+                else if((a[46] == carNumbers[4]) && (minute <= a[47] + 5) && (a[46] != 0))
                     {BusCharging(a[46],3,50);
                 BusCharge2(a[46],3);
                     if(minute == a[47] + 5)
@@ -522,31 +621,43 @@ public class clockScript : MonoBehaviour
 
             else if(minute > 15)
             {
-                if((a[42] == carNumbers[3]) && (minute <= a[43] + 5) && (a[42] != 0))
+                if((a[42] == carNumbers[4]) && (minute <= a[43] + 5) && (a[42] != 0))
                     {BusCharging(a[42],1,51);
                 BusCharge2(a[42],1);
                     if(minute == a[43] + 5)
                         ChargeFinished(a[42],1,51);}
+                else if((a[42] == carNumbers[5]) && (a[42] != 0))
+                {
+                    ChargeFinished(a[42],1,114);
+                }
                 else if((a[42] != carNumbers[5]) && (minute <= a[43]) && (a[42] != 0))
                     {BusCharging(a[42],1,51);
                 BusCharge2(a[42],1);
                     if(minute == a[43])
                         ChargeFinished(a[42],1,51);}
-                if((a[44] == carNumbers[3]) && (minute <= a[45] + 5) && (a[44] != 0))
+                if((a[44] == carNumbers[4]) && (minute <= a[45] + 5) && (a[44] != 0))
                     {BusCharging(a[44],2,52);
                 BusCharge2(a[44],2);
                     if(minute == a[45] + 5)
                         ChargeFinished(a[44],2,52);}
+                else if((a[44] == carNumbers[5]) && (a[44] != 0))
+                {
+                    ChargeFinished(a[44],2,115);
+                }
                 else if((a[44] != carNumbers[5]) && (minute <= a[45]) && (a[44] != 0))
                     {BusCharging(a[44],2,52);
                 BusCharge2(a[44],2);
                     if(minute == a[45])
                         ChargeFinished(a[44],2,52);}
-                if((a[46] == carNumbers[3]) && (minute <= a[47] + 5) && (a[46] != 0))
+                if((a[46] == carNumbers[4]) && (minute <= a[47] + 5) && (a[46] != 0))
                     {BusCharging(a[46],3,53);
                 BusCharge2(a[46],3);
                     if(minute == a[47] + 5)
                         ChargeFinished(a[46],3,53);}
+                else if((a[46] == carNumbers[5]) && (a[46] != 0))
+                {
+                    ChargeFinished(a[46],3,116);
+                }
                 else if((a[46] != carNumbers[5]) && (minute <= a[47]) && (a[46] != 0))
                     {BusCharging(a[46],3,53);
                 BusCharge2(a[46],3);
@@ -650,6 +761,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[6],1);
                     if(minute == a[7] + 5)
                         ChargeFinished(a[6],1,9);}
+                else if((a[6] == carNumbers[1]) && (a[6] != 0))
+                {
+                    ChargeFinished(a[6],1,102);
+                }
                 else if((a[6] != carNumbers[1]) && (minute <= a[7]) && (a[6] != 0))
                     {BusCharging(a[6],1,9);
                     BusCharge2(a[6],1);
@@ -660,6 +775,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[8],2);
                     if(minute == a[9] + 5)
                         ChargeFinished(a[8],2,10);}
+                else if((a[8] == carNumbers[1]) && (a[6] != 0))
+                {
+                    ChargeFinished(a[8],2,103);
+                }
                 else if((a[8] != carNumbers[1]) && (minute <= a[9]) && (a[8] != 0))
                     {BusCharging(a[8],2,10);
                     BusCharge2(a[8],2);
@@ -670,6 +789,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[10],3);
                     if(minute == a[11] + 5)
                         ChargeFinished(a[10],3,11);}
+                else if((a[10] == carNumbers[1]) && (a[6] != 0))
+                {
+                    ChargeFinished(a[10],3,104);
+                }
                 else if((a[10] != carNumbers[1]) && (minute <= a[11]) && (a[10] != 0))
                     {BusCharging(a[10],3,11);
                     BusCharge2(a[10],3);
@@ -753,6 +876,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[12],1);
                     if(minute == a[13] + 35)
                         ChargeFinished(a[12],1,18);}
+                else if((a[12] == carNumbers[2]) && (a[12] != 0))
+                {
+                    ChargeFinished(a[12],1,105);
+                }
                 else if((a[12] != carNumbers[2]) && (minute <= a[13]) && (a[12] != 0))
                     {BusCharging(a[12],1,18);
                     BusCharge2(a[12],1);
@@ -763,6 +890,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[14],2);
                     if(minute == a[15] + 35)
                         ChargeFinished(a[14],2,19);}
+                else if((a[14] == carNumbers[2]) && (a[14] != 0))
+                {
+                    ChargeFinished(a[14],2,106);
+                }
                 else if((a[14] != carNumbers[2]) && (minute <= a[15]) && (a[14] != 0))
                     {BusCharging(a[14],2,19);
                     BusCharge2(a[14],2);
@@ -773,6 +904,10 @@ public class clockScript : MonoBehaviour
                     BusCharge2(a[16],3);
                     if(minute == a[17] + 35)
                         ChargeFinished(a[16],3,20);}
+                else if((a[16] == carNumbers[2]) && (a[16] != 0))
+                {
+                    ChargeFinished(a[16],3,107);
+                }
                 else if((a[16] != carNumbers[2]) && (minute <= a[17]) && (a[16] != 0))
                     {BusCharging(a[16],3,20);
                     BusCharge2(a[16],3);
@@ -881,6 +1016,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[24],1);
                     if(minute == a[25] + 5)
                         ChargeFinished(a[24],1,30);}
+                else if((a[24] == carNumbers[3]) && (a[24] != 0))
+                {
+                    ChargeFinished(a[24],1,108);
+                }
                 else if((a[24] != carNumbers[3]) && (minute <= a[25]) && (a[24] != 0))
                     {BusCharging(a[24],1,30);
                 BusCharge2(a[24],1);
@@ -891,6 +1030,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[26],2);
                     if(minute == a[27] + 5)
                         ChargeFinished(a[26],2,31);}
+                else if((a[26] == carNumbers[3]) && (a[26] != 0))
+                {
+                    ChargeFinished(a[26],2,109);
+                }
                 else if((a[26] != carNumbers[3]) && (minute <= a[27]) && (a[26] != 0))
                     {BusCharging(a[26],2,31);
                 BusCharge2(a[26],2);
@@ -901,6 +1044,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[28],3);
                     if(minute == a[29] + 5)
                         ChargeFinished(a[28],3,32);}
+                else if((a[28] == carNumbers[3]) && (a[28] != 0))
+                {
+                    ChargeFinished(a[28],3,110);
+                }
                 else if((a[28] != carNumbers[3]) && (minute <= a[29]) && (a[28] != 0))
                     {BusCharging(a[28],3,32);
                 BusCharge2(a[28],3);
@@ -984,6 +1131,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[30],1);
                     if(minute == a[31] + 35)
                         ChargeFinished(a[30],1,39);}
+                else if((a[30] == carNumbers[4]) && (a[30] != 0))
+                {
+                    ChargeFinished(a[30],1,111);
+                }
                 else if((a[30] != carNumbers[4]) && (minute <= a[31]) && (a[30] != 0))
                     {BusCharging(a[30],1,39);
                 BusCharge2(a[30],1);
@@ -994,6 +1145,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[32],2);
                     if(minute == a[33] + 35)
                         ChargeFinished(a[32],2,40);}
+                else if((a[32] == carNumbers[4]) && (a[32] != 0))
+                {
+                    ChargeFinished(a[32],2,112);
+                }
                 else if((a[32] != carNumbers[4]) && (minute <= a[33]) && (a[32] != 0))
                     {BusCharging(a[32],2,40);
                 BusCharge2(a[32],2);
@@ -1004,6 +1159,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[34],3);
                     if(minute == a[35] + 35)
                         ChargeFinished(a[34],3,41);}
+                else if((a[34] == carNumbers[4]) && (a[34] != 0))
+                {
+                    ChargeFinished(a[34],3,113);
+                }
                 else if((a[34] != carNumbers[4]) && (minute <= a[35]) && (a[34] != 0))
                     {BusCharging(a[34],3,41);
                 BusCharge2(a[34],3);
@@ -1083,11 +1242,15 @@ public class clockScript : MonoBehaviour
             }
             else if(minute > 45)
             {
-                if((a[52] == carNumbers[5]) && (minute <= a[53] + 35) && (a[52] != 0))
+                if((a[48] == carNumbers[5]) && (minute <= a[49] + 35) && (a[48] != 0))
                     {BusCharging(a[48],1,60);
                 BusCharge2(a[48],1);
-                    if(minute == a[53 + 35])
+                    if(minute == a[49 + 35])
                         ChargeFinished(a[48],1,60);}
+                else if((a[48] == carNumbers[6]) && (a[48] != 0))
+                {
+                    ChargeFinished(a[48],1,117);
+                }
                 else if((a[48] != carNumbers[6]) && (minute <= a[49]) && (a[48] != 0))
                     {BusCharging(a[48],1,60);
                 BusCharge2(a[48],1);
@@ -1098,6 +1261,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[50],2);
                     if(minute == a[51] + 35)
                         ChargeFinished(a[50],2,61);}
+                else if((a[50] == carNumbers[6]) && (a[50] != 0))
+                {
+                    ChargeFinished(a[50],2,118);
+                }
                 else if((a[50] != carNumbers[6]) && (minute <= a[51]) && (a[50] != 0))
                     {BusCharging(a[50],2,61);
                 BusCharge2(a[50],2);
@@ -1108,6 +1275,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[52],3);
                     if(minute == a[53 + 35])
                         ChargeFinished(a[52],3,62);}
+                else if((a[52] == carNumbers[6]) && (a[52] != 0))
+                {
+                    ChargeFinished(a[52],3,119);
+                }
                 else if((a[52] != carNumbers[6]) && (minute <= a[53]) && (a[52] != 0))
                     {BusCharging(a[52],3,62);
                 BusCharge2(a[52],3);
@@ -1214,6 +1385,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[60],1);
                     if(minute == a[61] + 5)
                         ChargeFinished(a[60],1,72);}
+                else if((a[60] == carNumbers[7]) && (a[60] != 0))
+                {
+                    ChargeFinished(a[60],1,120);
+                }
                 else if((a[60] != carNumbers[7]) && (minute <= a[61]) && (a[60] != 0))
                     {BusCharging(a[60],1,72);
                 BusCharge2(a[60],1);
@@ -1224,6 +1399,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[62],2);
                     if(minute == a[63] + 5)
                         ChargeFinished(a[62],2,73);}
+                else if((a[62] == carNumbers[7]) && (a[62] != 0))
+                {
+                    ChargeFinished(a[62],2,121);
+                }
                 else if((a[62] != carNumbers[7]) && (minute <= a[63]) && (a[62] != 0))
                     {BusCharging(a[62],2,73);
                 BusCharge2(a[62],2);
@@ -1234,6 +1413,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[64],3);
                     if(minute == a[65 + 5])
                         ChargeFinished(a[64],3,74);}
+                else if((a[64] == carNumbers[7]) && (a[64] != 0))
+                {
+                    ChargeFinished(a[64],3,122);
+                }
                 else if((a[64] != carNumbers[7]) && (minute <= a[65]) && (a[64] != 0))
                     {BusCharging(a[64],3,74);
                 BusCharge2(a[64],3);
@@ -1316,6 +1499,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[66],1);
                     if(minute == a[67] + 35)
                         ChargeFinished(a[66],1,81);}
+                else if((a[66] == carNumbers[8]) && (a[66] != 0))
+                {
+                    ChargeFinished(a[66],1,123);
+                }
                 else if((a[66] != carNumbers[8]) && (minute <= a[67]) && (a[66] != 0))
                     {BusCharging(a[66],1,81);
                 BusCharge2(a[66],1);
@@ -1326,6 +1513,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[68],2);
                     if(minute == a[69] + 35)
                         ChargeFinished(a[68],2,82);}
+                else if((a[68] == carNumbers[8]) && (a[68] != 0))
+                {
+                    ChargeFinished(a[68],2,124);
+                }
                 else if((a[68] != carNumbers[8]) && (minute <= a[69]) && (a[68] != 0))
                     {BusCharging(a[68],2,82);
                 BusCharge2(a[68],2);
@@ -1336,6 +1527,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[70],3);
                     if(minute == a[71 + 35])
                         ChargeFinished(a[70],3,83);}
+                else if((a[70] == carNumbers[8]) && (a[70] != 0))
+                {
+                    ChargeFinished(a[70],3,125);
+                }
                 else if((a[70] != carNumbers[8]) && (minute <= a[71]) && (a[70] != 0))
                     {BusCharging(a[70],3,83);
                 BusCharge2(a[70],3);
@@ -1442,6 +1637,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[78],1);
                     if(minute == a[79] + 5)
                         ChargeFinished(a[78],1,93);}
+                else if((a[78] == carNumbers[9]) && (a[78] != 0))
+                {
+                    ChargeFinished(a[78],1,126);
+                }
                 else if((a[78] != carNumbers[9]) && (minute <= a[79]) && (a[78] != 0))
                     {BusCharging(a[78],1,93);
                 BusCharge2(a[78],1);
@@ -1452,6 +1651,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[80],2);
                     if(minute == a[81] + 5)
                         ChargeFinished(a[80],2,94);}
+                else if((a[80] == carNumbers[9]) && (a[80] != 0))
+                {
+                    ChargeFinished(a[80],2,127);
+                }
                 else if((a[80] != carNumbers[9]) && (minute <= a[81]) && (a[80] != 0))
                     {BusCharging(a[80],2,94);
                 BusCharge2(a[80],2);
@@ -1462,6 +1665,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[82],3);
                     if(minute == a[83] + 5)
                         ChargeFinished(a[82],3,95);}
+                else if((a[82] == carNumbers[9]) && (a[82] != 0))
+                {
+                    ChargeFinished(a[82],3,128);
+                }
                 else if((a[82] != carNumbers[9]) && (minute <= a[83]) && (a[82] != 0))
                     {BusCharging(a[82],3,95);
                 BusCharge2(a[82],3);
@@ -1511,6 +1718,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[84],1);
                     if(minute == 30 + a[85])
                         ChargeFinished(a[84],1,99);}
+                else if((a[84] == carNumbers[10]) && (a[84] != 0))
+                {
+                    ChargeFinished(a[84],1,129);
+                }
                 else if((a[84] != carNumbers[10]) && (minute <= a[85]) && (a[84] != 0))
                     {BusCharging(a[84],1,99);
                 BusCharge2(a[84],1);
@@ -1521,6 +1732,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[86],2);
                     if(minute == a[87])
                         ChargeFinished(a[86],2,100);}
+                else if((a[86] == carNumbers[10]) && (a[86] != 0))
+                {
+                    ChargeFinished(a[86],2,130);
+                }
                 else if((a[86] != carNumbers[10]) && (minute <= a[87]) && (a[86] != 0))
                     {BusCharging(a[86],2,100);
                 BusCharge2(a[86],2);
@@ -1531,6 +1746,10 @@ public class clockScript : MonoBehaviour
                 BusCharge2(a[88],3);
                     if(minute == a[89])
                         ChargeFinished(a[88],3,101);}
+                else if((a[88] == carNumbers[10]) && (a[88] != 0))
+                {
+                    ChargeFinished(a[88],3,131);
+                }
                 else if((a[88] != carNumbers[10]) && (minute <= a[89]) && (a[88] != 0))
                     {BusCharging(a[88],3,101);
                 BusCharge2(a[88],3);
@@ -1554,24 +1773,25 @@ public class clockScript : MonoBehaviour
         if (hour == 23 && minute == 50)
         {
             ended.SetActive(true);
-            carbonText2.text = carbonText.text;
-            priceText2.text = priceText.text;
-            for (int i = 0; i < busCharges.Length; i++)
-            {
-                totalCharge += busCharges[i];
-            }
-            totalCharge /= 8;
-            avgBusCharge.text = totalCharge.ToString();
             UpdateHighScores();
         }
     }
     
     public void UpdateHighScores()
     {
+        carbonText2.text = carbonText.text;
+        priceText2.text = priceText.text;
+        totalCharge = 0;
+        for (int i = 0; i < busCharges.Length; i++)
+        {
+            totalCharge += busCharges[i];
+        }
+        totalCharge /= 8;
+        avgBusCharge.text = totalCharge.ToString();
+        
         // Yeni değerler alınır
         float carbonValue = float.Parse(carbonText2.text);
         float priceValue = float.Parse(priceText2.text);
-        float avgCharge = float.Parse(avgBusCharge.text);
 
         // Karbon değeri kontrol edilir
         if (carbonValue < minCarbonValue)
@@ -1590,11 +1810,12 @@ public class clockScript : MonoBehaviour
         }
 
         // Ortalama şarj değeri kontrol edilir
-        if (avgCharge > minAvgBusCharge)
+        if (totalCharge > maxAvgBusCharge)
         {
-            minAvgBusCharge = avgCharge;
-            avgBusCharge2.text = minAvgBusCharge.ToString();
-            PlayerPrefs.SetFloat("MinAvgBusCharge", minAvgBusCharge);
+            maxAvgBusCharge = totalCharge;
+            avgBusCharge2.text = maxAvgBusCharge.ToString();
+            PlayerPrefs.SetFloat("maxAvgBusCharge", maxAvgBusCharge);
+            PlayerPrefs.Save();
         }
     }
 }

@@ -25,4 +25,8 @@ public class buttonCode2 : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }

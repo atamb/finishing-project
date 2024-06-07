@@ -81,6 +81,9 @@ ScriptsOnlyBuild:
   methodsToPreserve:
   - assembly: Assembly-CSharp
     fullTypeName: buttonCode2
+    methodName: Quit
+  - assembly: Assembly-CSharp
+    fullTypeName: buttonCode2
     methodName: MainMenu
   - assembly: Assembly-CSharp
     fullTypeName: buttonCode2
@@ -121,6 +124,9 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: clockScript
     methodName: speedControlMinus
+  - assembly: Assembly-CSharp
+    fullTypeName: buttonCode2
+    methodName: MainMenu1
   - assembly: Assembly-CSharp
     fullTypeName: buttonCode
     methodName: changeStation
@@ -1093,7 +1099,7 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
-      Hash: eba48f2106c938b2e0d56b504c36167d
+      Hash: 1aef56a4527fd5011a40c663309e7789
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: clockScript
@@ -1192,4 +1198,4 @@ ScriptsOnlyBuild:
   - Assets/Scenes/MainMenu.unity
   - Assets/Scenes/SelectingScene.unity
   - Assets/Scenes/GameScene.unity
-  playerPath: /Users/ata/Desktop/oyun.app
+  playerPath: /Users/ata/Desktop/simulation.app
